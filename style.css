@@ -332,7 +332,7 @@ header {
 /* 📞 FLOATING CALL BUTTON */
 .call-btn {
   position: fixed;
-  bottom: 20px;
+  bottom: 50px;
   right: 20px;
   background: #2e7d32;
   color: white;
