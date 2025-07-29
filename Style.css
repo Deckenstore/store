@@ -1,0 +1,460 @@
+/* ✅ RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  color: #222;
+  transition: background 0.3s ease, color 0.3s ease;
+  line-height: 1.5;
+}
+
+/* 🎉 TOP BAR */
+.top-bar {
+  background: #ff5c5c;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* 📌 HEADER */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: #2e7d32;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menu-btn {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.menu-btn:hover {
+  transform: scale(1.2);
+}
+
+.search-box {
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.search-box input {
+  padding: 6px;
+  border: none;
+  outline: none;
+  width: 160px;
+  font-size: 14px;
+}
+
+.search-box button {
+  background: #ffd814;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: bold;
+}
+.search-box button:hover {
+  background: #ffca00;
+}
+
+.cart {
+  font-size: 22px;
+  cursor: pointer;
+  position: relative;
+}
+
+.cart-count {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+}
+
+/* 📱 SIDE MENU */
+.menu-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -270px;
+  width: 250px;
+  height: 100%;
+  background: #388e3c;
+  color: white;
+  padding: 20px;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.3);
+}
+
+.side-menu h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.menu-link {
+  display: block;
+  background: #2e7d32;
+  color: white;
+  padding: 12px;
+  margin: 8px 0;
+  text-align: left;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.menu-link:hover {
+  background: #1b5e20;
+}
+
+.close-btn {
+  background: red;
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.close-btn:hover {
+  background: #b30000;
+}
+
+/* 🖼 HERO SLIDER */
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slides img {
+  width: 100%;
+  display: none;
+  border-bottom: 3px solid #ddd;
+}
+
+.slides img.active {
+  display: block;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  text-shadow: 2px 2px 8px black;
+}
+
+.hero-text h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* 🏷 CATEGORIES */
+.categories {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  background: #f1f1f1;
+  padding: 12px;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.categories span {
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.categories span:hover {
+  transform: scale(1.1);
+  background: #ffeaa7;
+}
+
+/* 🛍 PRODUCTS SECTION */
+.products {
+  padding: 20px;
+}
+
+.products h2 {
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.product-card {
+  background: #fff;
+  padding: 12px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: #2e7d32;
+  margin: 8px 0;
+}
+
+.product-card button {
+  background: #ff9900;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.product-card button:hover {
+  background: #cc7a00;
+}
+
+/* ⭐ TESTIMONIALS */
+.testimonials {
+  background: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+}
+
+.testimonials p {
+  font-style: italic;
+  margin: 5px 0;
+}
+
+/* ✉ NEWSLETTER */
+.newsletter {
+  padding: 20px;
+  text-align: center;
+  background: #e8f5e9;
+}
+
+.newsletter input {
+  padding: 10px;
+  width: 60%;
+  max-width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.newsletter button {
+  padding: 10px;
+  margin-left: 5px;
+  border: none;
+  background: #2e7d32;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.newsletter button:hover {
+  background: #1b5e20;
+}
+
+/* 📞 FLOATING CALL BUTTON */
+.call-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #2e7d32;
+  color: white;
+  font-size: 22px;
+  padding: 12px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+.call-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ⚓ FOOTER */
+footer {
+  background: #2e7d32;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+footer a {
+  color: yellow;
+  text-decoration: none;
+}
+
+/* 🔲 POPUP SECTIONS */
+.popup-section {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  border-radius: 12px;
+  z-index: 2000;
+}
+
+.popup-section h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.cart-item {
+  background: #f9f9f9;
+  padding: 6px;
+  margin: 5px 0;
+  border-radius: 6px;
+}
+
+.remove-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 2px 6px;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Checkout Inputs */
+#checkout-section input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.order-btn {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.order-btn:hover {
+  background: #1b5e20;
+}
+
+/* 🌙 DARK MODE */
+body.dark-mode {
+  background: #121212;
+  color: #ddd;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+  background: #1e1e1e;
+}
+
+body.dark-mode .product-card {
+  background: #1e1e1e;
+  color: #ddd;
+}
+
+body.dark-mode .categories {
+  background: #2a2a2a;
+}
+
+body.dark-mode .categories span {
+  background: #333;
+  color: #eee;
+}
+
+body.dark-mode .newsletter {
+  background: #1f1f1f;
+}
+
+body.dark-mode .popup-section {
+  background: #2a2a2a;
+  color: white;
+}
