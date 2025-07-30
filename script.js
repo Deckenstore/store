@@ -2,12 +2,32 @@
 const TELEGRAM_BOT_TOKEN = "7942211815:AAGo9GylL7zO_SUWWkqJn1AFH40DO-Q0cqY";
 const TELEGRAM_CHAT_ID = "-4891793325";
 
+// ✅ CART & ORDER DATA (LocalStorage ke saath)
+let cart = [];
+let orders = [];
+
+// ✅ PAGE LOAD PAR CART & ORDERS LOAD
+window.onload = () => {
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
+  orders = JSON.parse(localStorage.getItem("orders")) || [];
+  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
+  updateCartUI();
+  updateOrdersUI();
+};
+
+// ✅ LOCALSTORAGE SAVE FUNCTIONS
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+function saveOrders() {
+  localStorage.setItem("orders", JSON.stringify(orders));
+}
+
 // ✅ MENU TOGGLE FUNCTION
 function toggleMenu() {
   const menu = document.getElementById("side-menu");
   const backdrop = document.getElementById("menu-backdrop");
   const isOpen = menu.style.left === "0px";
-
   menu.style.left = isOpen ? "-270px" : "0px";
   backdrop.style.display = isOpen ? "none" : "block";
 }
@@ -17,13 +37,11 @@ function toggleCart() {
   closePanel();
   document.getElementById("cart-section").style.display = "block";
 }
-
 function showOrders() {
   closePanel();
   document.getElementById("orders-section").style.display = "block";
   toggleMenu();
 }
-
 function showSettings() {
   closePanel();
   document.getElementById("settings-section").style.display = "block";
@@ -60,9 +78,6 @@ function scrollToSection(id) {
 }
 
 // ✅ CART SYSTEM (with Quantity)
-let cart = [];
-let orders = [];
-
 function addToCart(productName, price) {
   let item = cart.find((i) => i.name === productName);
   if (item) {
@@ -72,6 +87,7 @@ function addToCart(productName, price) {
   }
   document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
+  saveCart(); // 🔥 SAVE TO LOCALSTORAGE
   showToast(`✅ ${productName} added to cart`);
 }
 
@@ -101,12 +117,14 @@ function changeQty(index, delta) {
   if (cart[index].qty <= 0) cart.splice(index, 1);
   document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
+  saveCart(); // 🔥 SAVE TO LOCALSTORAGE
 }
 
 function removeFromCart(index) {
   cart.splice(index, 1);
   document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
+  saveCart(); // 🔥 SAVE TO LOCALSTORAGE
 }
 
 // ✅ DARK MODE
@@ -120,16 +138,13 @@ function toggleDarkMode() {
 // ✅ HERO SLIDER
 let currentSlide = 0;
 const slides = document.querySelectorAll(".slides img");
-
 function showSlide(index) {
   slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
 }
-
 function nextSlide() {
   currentSlide = (currentSlide + 1) % slides.length;
   showSlide(currentSlide);
 }
-
 setInterval(nextSlide, 4000);
 showSlide(currentSlide);
 
@@ -139,7 +154,6 @@ function openCheckout() {
   closePanel();
   document.getElementById("checkout-section").style.display = "block";
 }
-
 function closeCheckout() {
   document.getElementById("checkout-section").style.display = "none";
 }
@@ -164,7 +178,9 @@ async function placeOrder() {
   };
 
   orders.push(newOrder);
+  saveOrders(); // 🔥 SAVE TO LOCALSTORAGE
 
+  // ✅ Telegram Send
   let message = `🛍 *New Order Received!*\n\n👤 Name: ${name}\n📍 Address: ${address}\n📞 Phone: ${phone}\n\n📦 *Items Ordered:*\n`;
   newOrder.items.forEach((item, i) => {
     message += `${i + 1}. ${item.name} - ₹${item.price} x ${item.qty}\n`;
@@ -181,8 +197,9 @@ async function placeOrder() {
     console.error("Telegram API Error:", e);
   }
 
-  // Reset cart & update UI
+  // ✅ Reset cart after order
   cart = [];
+  saveCart(); // 🔥 CLEAR LOCALSTORAGE CART
   document.querySelector(".cart-count").innerText = "0";
   updateCartUI();
   updateOrdersUI();
@@ -240,4 +257,4 @@ function showToast(msg) {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
   }, 2500);
-}
+    }
