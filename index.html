@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Decken Store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 🔝 TOP OFFER BAR -->
+  <div class="top-bar">
+    🎉 Free Delivery on Orders Above ₹499 | Festive Sale is Live! 🔥
+  </div>
+
+  <!-- 📌 HEADER -->
+  <header>
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    <div class="logo">🛍 The Decken Store</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search for products..." onkeyup="searchProducts()">
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+    <div class="cart" onclick="toggleCart()">🛒<span class="cart-count">0</span></div>
+  </header>
+
+  <!-- 📱 SIDE MENU -->
+  <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu()"></div>
+  <div id="side-menu" class="side-menu">
+    <h2>☰ Main Menu</h2>
+    <button class="menu-link" onclick="scrollToSection('hero')">🏠 Home</button>
+    <button class="menu-link" onclick="scrollToSection('products')">🛍 All Products</button>
+    <button class="menu-link" onclick="scrollToSection('bestsellers')">⭐ Best Sellers</button>
+    <button class="menu-link" onclick="showOrders()">📦 My Orders</button>
+    <button class="menu-link" onclick="scrollToSection('contact')">📞 Contact Us</button>
+    <hr>
+    <button class="menu-link" onclick="showSettings()">⚙️ Settings</button>
+    <button class="close-btn" onclick="toggleMenu()">✖ Close Menu</button>
+  </div>
+
+  <!-- 🖼 HERO SECTION -->
+  <section id="hero" class="hero">
+    <div class="slides">
+      <img src="images/banner1.jpg" class="active">
+      <img src="images/banner2.jpg">
+      <img src="images/banner3.jpg">
+    </div>
+    <div class="hero-text">
+      <h1>Welcome to The Decken Store</h1>
+      <p>🔥 Flat 10% Off on First Order 🔥</p>
+    </div>
+  </section>
+
+  <!-- 🏷 CATEGORIES -->
+  <div class="categories">
+    <span onclick="filterCategory('all')">All</span>
+    <span onclick="filterCategory('Clothing')">👕 Clothing</span>
+    <span onclick="filterCategory('Electronics')">📱 Electronics</span>
+    <span onclick="filterCategory('Fashion')">👗 Fashion</span>
+    <span onclick="filterCategory('Home')">🏠 Home</span>
+    <span onclick="filterCategory('Gadgets')">🎧 Gadgets</span>
+    <span onclick="filterCategory('Accessories')">👜 Accessories</span>
+    <span onclick="filterCategory('Footwear')">👟 Footwear</span>
+  </div>
+
+  <!-- 🛍 PRODUCTS -->
+  <section id="products" class="products">
+    <h2>✨ Trending Products</h2>
+    <div class="product-grid" id="productGrid">
+
+      <!-- ✅ ALL PRODUCTS (unchanged) -->
+      <div class="product-card" data-category="Accessories">
+        <img src="images/cap.jpg" alt="Cool Cap">
+        <h3>Cool Cap</h3>
+        <p class="price">₹150</p>
+        <button onclick="addToCart('Cool Cap',150)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/socks.jpg" alt="Soft Socks">
+        <h3>Soft Socks</h3>
+        <p class="price">₹120</p>
+        <button onclick="addToCart('Soft Socks',120)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Home">
+        <img src="images/mug.jpg" alt="Coffee Mug">
+        <h3>Coffee Mug</h3>
+        <p class="price">₹180</p>
+        <button onclick="addToCart('Coffee Mug',180)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/keychain.jpg" alt="Keychain">
+        <h3>Keychain</h3>
+        <p class="price">₹100</p>
+        <button onclick="addToCart('Keychain',100)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Home">
+        <img src="images/notebook.jpg" alt="Notebook">
+        <h3>Notebook</h3>
+        <p class="price">₹140</p>
+        <button onclick="addToCart('Notebook',140)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Home">
+        <img src="images/waterbottle.jpg" alt="Water Bottle">
+        <h3>Water Bottle</h3>
+        <p class="price">₹220</p>
+        <button onclick="addToCart('Water Bottle',220)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/pen.jpg" alt="Stylish Pen">
+        <h3>Stylish Pen</h3>
+        <p class="price">₹110</p>
+        <button onclick="addToCart('Stylish Pen',110)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Footwear">
+        <img src="images/slippers.jpg" alt="Casual Slippers">
+        <h3>Casual Slippers</h3>
+        <p class="price">₹350</p>
+        <button onclick="addToCart('Casual Slippers',350)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/tote.jpg" alt="Tote Bag">
+        <h3>Tote Bag</h3>
+        <p class="price">₹300</p>
+        <button onclick="addToCart('Tote Bag',300)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/wristband.jpg" alt="Wristband">
+        <h3>Wristband</h3>
+        <p class="price">₹130</p>
+        <button onclick="addToCart('Wristband',130)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Fashion">
+        <img src="images/scarf.jpg" alt="Scarf">
+        <h3>Scarf</h3>
+        <p class="price">₹250</p>
+        <button onclick="addToCart('Scarf',250)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/hairbrush.jpg" alt="Hair Brush">
+        <h3>Hair Brush</h3>
+        <p class="price">₹180</p>
+        <button onclick="addToCart('Hair Brush',180)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Electronics">
+        <img src="images/earphones.jpg" alt="Earphones">
+        <h3>Earphones</h3>
+        <p class="price">₹450</p>
+        <button onclick="addToCart('Earphones',450)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/belt.jpg" alt="Casual Belt">
+        <h3>Casual Belt</h3>
+        <p class="price">₹320</p>
+        <button onclick="addToCart('Casual Belt',320)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/pouch.jpg" alt="Small Pouch">
+        <h3>Small Pouch</h3>
+        <p class="price">₹160</p>
+        <button onclick="addToCart('Small Pouch',160)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/gloves.jpg" alt="Gloves">
+        <h3>Gloves</h3>
+        <p class="price">₹200</p>
+        <button onclick="addToCart('Gloves',200)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/miniwallet.jpg" alt="Mini Wallet">
+        <h3>Mini Wallet</h3>
+        <p class="price">₹240</p>
+        <button onclick="addToCart('Mini Wallet',240)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Fashion">
+        <img src="images/casualhat.jpg" alt="Casual Hat">
+        <h3>Casual Hat</h3>
+        <p class="price">₹280</p>
+        <button onclick="addToCart('Casual Hat',280)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/mask.jpg" alt="Face Mask">
+        <h3>Face Mask</h3>
+        <p class="price">₹90</p>
+        <button onclick="addToCart('Face Mask',90)">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-category="Accessories">
+        <img src="images/bracelet.jpg" alt="Bracelet">
+        <h3>Bracelet</h3>
+        <p class="price">₹210</p>
+        <button onclick="addToCart('Bracelet',210)">Add to Cart</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ⭐ TESTIMONIALS -->
+  <section id="bestsellers" class="testimonials">
+    <h2>⭐ What Our Customers Say</h2>
+    <p>"Amazing products at great prices!" – Rahul</p>
+    <p>"Fast delivery & smooth experience." – Neha</p>
+  </section>
+
+  <!-- ✉ NEWSLETTER -->
+  <section class="newsletter" id="contact">
+    <h2>📩 Subscribe for Offers</h2>
+    <input type="email" id="subscriberEmail" placeholder="Enter your email">
+    <button onclick="sendSubscription()">Subscribe</button>
+  </section>
+
+  <!-- ✅ TRUST BADGES -->
+  <div class="trust-badges">
+    <div class="badge">✅ 100% Secure Payment</div>
+    <div class="badge">🔄 Easy Returns</div>
+    <div class="badge">⚡ Fast Delivery</div>
+  </div>
+
+  <!-- 📞 CALL BUTTON -->
+  <a href="tel:+911613145098" class="call-btn">📞</a>
+
+  <!-- ⚓ FOOTER -->
+  <footer>
+    <p>© 2025 The Decken Store | 
+      <a href="privacy.html">Privacy</a> | 
+      <a href="terms.html">Terms</a> | 
+      <a href="refund.html">Refund</a> | 
+      <a href="mailto:support@deckenstore.com">Contact</a>
+    </p>
+    <p>💳 Payments Accepted: UPI • PhonePe • Paytm </p>
+  </footer>
+
+  <!-- 🔽 POPUPS -->
+  <!-- 🛒 CART -->
+  <div id="cart-section" class="popup-section" style="display:none;">
+    <h2>🛒 Your Cart</h2>
+    <div id="cart-items"></div>
+    <p id="cart-total">Total: ₹0</p>
+    <button onclick="openCheckout()">✅ Checkout</button>
+    <button onclick="closePanel()">❌ Close</button>
+  </div>
+
+  <!-- 📦 ORDERS -->
+  <div id="orders-section" class="popup-section" style="display:none;">
+    <h2>📦 My Orders</h2>
+    <div id="orders-list"><p>No orders placed yet!</p></div>
+    <button onclick="closePanel()">❌ Close</button>
+  </div>
+
+  <!-- ⚙ SETTINGS -->
+  <div id="settings-section" class="popup-section" style="display:none;">
+    <h2>⚙ Settings</h2>
+    <button id="darkModeBtn" onclick="toggleDarkMode()">🌙 Enable Dark Mode</button>
+    <button onclick="closePanel()">❌ Close</button>
+  </div>
+
+  <!-- ✅ CHECKOUT -->
+  <div id="checkout-section" class="popup-section" style="display:none;">
+    <h2>✅ Checkout</h2>
+    <input id="name" type="text" placeholder="Your Name">
+    <input id="address" type="text" placeholder="Delivery Address">
+    <input id="phone" type="text" placeholder="Phone Number">
+    <button onclick="placeOrder()">📦 Place Order</button>
+    <button onclick="closeCheckout()">❌ Cancel</button>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
