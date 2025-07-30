@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://deckenstore.github.io/store/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://deckenstore.github.io/store/product.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deckenstore.github.io/store/privacy.html</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deckenstore.github.io/store/refund.html</loc>
+    <priority>0.6</priority>
+  </url>
+</urlset>
