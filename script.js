@@ -2,26 +2,41 @@
 const TELEGRAM_BOT_TOKEN = "7942211815:AAGo9GylL7zO_SUWWkqJn1AFH40DO-Q0cqY";
 const TELEGRAM_CHAT_ID = "-4891793325";
 
-// ✅ CART & ORDER DATA (LocalStorage ke saath)
+// ✅ CART & ORDER DATA
 let cart = [];
 let orders = [];
 
-// ✅ PAGE LOAD PAR CART & ORDERS LOAD
-window.onload = () => {
+// ✅ LOAD CART & ORDERS FROM LOCALSTORAGE
+function loadCart() {
   cart = JSON.parse(localStorage.getItem("cart")) || [];
-  orders = JSON.parse(localStorage.getItem("orders")) || [];
-  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
-  updateOrdersUI();
-};
+  updateCartCount();
+}
 
-// ✅ LOCALSTORAGE SAVE FUNCTIONS
+function loadOrders() {
+  orders = JSON.parse(localStorage.getItem("orders")) || [];
+  updateOrdersUI();
+}
+
+// ✅ SAVE CART & ORDERS TO LOCALSTORAGE
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
+
 function saveOrders() {
   localStorage.setItem("orders", JSON.stringify(orders));
 }
+
+// ✅ UPDATE CART COUNT BADGE
+function updateCartCount() {
+  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
+}
+
+// ✅ PAGE LOAD PAR CART & ORDERS LOAD
+document.addEventListener("DOMContentLoaded", () => {
+  loadCart();
+  loadOrders();
+});
 
 // ✅ MENU TOGGLE FUNCTION
 function toggleMenu() {
@@ -71,12 +86,6 @@ function filterCategory(category) {
   toggleMenu();
 }
 
-// ✅ SMOOTH SCROLL
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-  toggleMenu();
-}
-
 // ✅ CART SYSTEM (with Quantity)
 function addToCart(productName, price) {
   let item = cart.find((i) => i.name === productName);
@@ -85,14 +94,16 @@ function addToCart(productName, price) {
   } else {
     cart.push({ name: productName, price: price, qty: 1 });
   }
-  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
-  saveCart(); // 🔥 SAVE TO LOCALSTORAGE
+  updateCartCount();
+  saveCart();
   showToast(`✅ ${productName} added to cart`);
 }
 
 function updateCartUI() {
   const cartItems = document.getElementById("cart-items");
+  if (!cartItems) return;
+
   cartItems.innerHTML = "";
   let total = 0;
 
@@ -115,38 +126,22 @@ function updateCartUI() {
 function changeQty(index, delta) {
   cart[index].qty += delta;
   if (cart[index].qty <= 0) cart.splice(index, 1);
-  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
-  saveCart(); // 🔥 SAVE TO LOCALSTORAGE
+  updateCartCount();
+  saveCart();
 }
 
 function removeFromCart(index) {
   cart.splice(index, 1);
-  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
   updateCartUI();
-  saveCart(); // 🔥 SAVE TO LOCALSTORAGE
+  updateCartCount();
+  saveCart();
 }
 
-// ✅ DARK MODE
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-  document.getElementById("darkModeBtn").innerText = document.body.classList.contains("dark-mode")
-    ? "☀️ Disable Dark Mode"
-    : "🌙 Enable Dark Mode";
+// ✅ UPDATE CART COUNT
+function updateCartCount() {
+  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
 }
-
-// ✅ HERO SLIDER
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slides img");
-function showSlide(index) {
-  slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
-}
-function nextSlide() {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
-setInterval(nextSlide, 4000);
-showSlide(currentSlide);
 
 // ✅ CHECKOUT
 function openCheckout() {
@@ -154,6 +149,7 @@ function openCheckout() {
   closePanel();
   document.getElementById("checkout-section").style.display = "block";
 }
+
 function closeCheckout() {
   document.getElementById("checkout-section").style.display = "none";
 }
@@ -178,7 +174,7 @@ async function placeOrder() {
   };
 
   orders.push(newOrder);
-  saveOrders(); // 🔥 SAVE TO LOCALSTORAGE
+  saveOrders();
 
   // ✅ Telegram Send
   let message = `🛍 *New Order Received!*\n\n👤 Name: ${name}\n📍 Address: ${address}\n📞 Phone: ${phone}\n\n📦 *Items Ordered:*\n`;
@@ -199,9 +195,9 @@ async function placeOrder() {
 
   // ✅ Reset cart after order
   cart = [];
-  saveCart(); // 🔥 CLEAR LOCALSTORAGE CART
-  document.querySelector(".cart-count").innerText = "0";
+  saveCart();
   updateCartUI();
+  updateCartCount();
   updateOrdersUI();
 
   showToast("🎉 Order Placed Successfully!");
@@ -212,6 +208,8 @@ async function placeOrder() {
 // ✅ ORDERS UI
 function updateOrdersUI() {
   const ordersList = document.getElementById("orders-list");
+  if (!ordersList) return;
+
   ordersList.innerHTML = "";
   if (orders.length === 0) {
     ordersList.innerHTML = "<p>No orders placed yet!</p>";
@@ -234,17 +232,6 @@ function updateOrdersUI() {
   });
 }
 
-// ✅ NEWSLETTER
-function sendSubscription() {
-  const email = document.getElementById("subscriberEmail").value;
-  if (!email) return alert("⚠️ Please enter your email first!");
-
-  const myEmail = "thedeckenstore@gmail.com";
-  const subject = "New Subscription for The Decken Store";
-  const body = `Hello,\n\nA new user subscribed for offers.\n\n📩 Email: ${email}\n\nThank You!`;
-  window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
 // ✅ TOAST (Success Notification)
 function showToast(msg) {
   let toast = document.createElement("div");
@@ -257,4 +244,4 @@ function showToast(msg) {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
   }, 2500);
-    }
+}
