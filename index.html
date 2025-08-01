@@ -17,10 +17,6 @@
   <header>
     <span class="menu-btn" onclick="toggleMenu()">☰</span>
     <div class="logo">🛍 The Decken Store</div>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search for products..." onkeyup="searchProducts()">
-      <button onclick="searchProducts()">🔍</button>
-    </div>
     <div class="cart" onclick="toggleCart()">🛒<span class="cart-count">0</span></div>
   </header>
 
@@ -28,6 +24,13 @@
   <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu()"></div>
   <div id="side-menu" class="side-menu">
     <h2>☰ Main Menu</h2>
+
+    <!-- ✅ SEARCH MOVED HERE -->
+    <div class="search-box" style="margin-bottom:15px;">
+      <input type="text" id="searchInput" placeholder="Search for products..." onkeyup="searchProducts()">
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+
     <button class="menu-link" onclick="scrollToSection('hero')">🏠 Home</button>
     <button class="menu-link" onclick="scrollToSection('products')">🛍 All Products</button>
     <button class="menu-link" onclick="scrollToSection('bestsellers')">⭐ Best Sellers</button>
@@ -68,7 +71,7 @@
     <h2>✨ Trending Products</h2>
     <div class="product-grid" id="productGrid">
 
-      <!-- ✅ ALL PRODUCTS (unchanged) -->
+      <!-- ✅ ALL PRODUCTS -->
       <div class="product-card" data-category="Accessories">
         <img src="images/cap.jpg" alt="Cool Cap">
         <h3>Cool Cap</h3>
@@ -283,4 +286,4 @@
 
 <script src="script.js"></script>
 </body>
-</html>
+        </html>
