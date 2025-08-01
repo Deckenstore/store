@@ -52,11 +52,13 @@ function toggleCart() {
   closePanel();
   document.getElementById("cart-section").style.display = "block";
 }
+
 function showOrders() {
   closePanel();
   document.getElementById("orders-section").style.display = "block";
   toggleMenu();
 }
+
 function showSettings() {
   closePanel();
   document.getElementById("settings-section").style.display = "block";
@@ -138,11 +140,6 @@ function removeFromCart(index) {
   saveCart();
 }
 
-// ✅ UPDATE CART COUNT
-function updateCartCount() {
-  document.querySelector(".cart-count").innerText = cart.reduce((sum, i) => sum + i.qty, 0);
-}
-
 // ✅ CHECKOUT
 function openCheckout() {
   if (cart.length === 0) return alert("Your cart is empty!");
@@ -156,11 +153,12 @@ function closeCheckout() {
 
 // ✅ PLACE ORDER (Send to Telegram)
 async function placeOrder() {
-  const name = document.getElementById("name").value;
-  const address = document.getElementById("address").value;
-  const phone = document.getElementById("phone").value;
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const phone = document.getElementById("phone").value.trim();
 
   if (!name || !address || !phone) return alert("⚠️ Please fill all fields!");
+  if (!/^[0-9]{10}$/.test(phone)) return alert("📞 Please enter a valid 10-digit phone number!");
 
   let total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const newOrder = {
