@@ -169,14 +169,34 @@ header {
   overflow: hidden;
 }
 
-.slides img {
+/* 🎯 BANNER SLIDER */
+.banner-slider {
   width: 100%;
-  display: none;
-  border-bottom: 3px solid #ddd;
+  height: 220px;
+  overflow: hidden;
+  position: relative;
 }
 
-.slides img.active {
-  display: block;
+.banner-slider .slides {
+  display: flex;
+  width: 300%;
+  animation: slide 12s infinite;
+}
+
+.banner-slider img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* 🎬 SLIDER ANIMATION */
+@keyframes slide {
+  0% { transform: translateX(0%); }
+  30% { transform: translateX(0%); }
+  35% { transform: translateX(-100%); }
+  65% { transform: translateX(-100%); }
+  70% { transform: translateX(-200%); }
+  100% { transform: translateX(-200%); }
 }
 
 .hero::after {
@@ -625,4 +645,4 @@ body.dark-mode .remove-btn {
 /* 🎯 BACKDROP ACTIVE STATE */
 .menu-backdrop.active {
   display: block;
-}
+  }
