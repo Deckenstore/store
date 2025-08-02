@@ -180,14 +180,12 @@ header {
 }
 
 .slide img {
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: 250px !important;
-  object-fit: contain !important;
-  transform: none !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* ✅ Container fill करेगा, gaps नहीं होंगे */
+  background: #fff;
+  transform: none;
 }
-
 @keyframes slide {
   0%, 30%   { transform: translateX(0%); }
   33%, 63%  { transform: translateX(-100%); }
