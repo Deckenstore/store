@@ -190,9 +190,8 @@ header {
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: scale(1);       /* ❌ Default zoom removed */
-  transition: none;
+  object-fit: contain;   /* ✅ pura image bina crop ke dikhega */
+  background: #fff;      /* ✅ agar image chhoti hai toh white space fill karega */
 }
 
 @keyframes slide {
