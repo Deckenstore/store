@@ -506,3 +506,74 @@ body.dark-mode .remove-btn {
   .banner-slider {
     height: 350px;
   }
+  /* 🎞 Banner Slider */
+.banner-slider {
+  position: relative;
+  width: 100%;
+  max-height: 350px;
+  overflow: hidden;
+}
+
+.banner-slider .slides {
+  display: flex;
+  width: 300%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.banner-slider .slide {
+  min-width: 100%;
+}
+
+.banner-slider img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+/* 🔘 Dots */
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dots span {
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dots .active {
+  background: #333;
+}
+
+/* ⬅️➡️ Buttons */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.prev:hover, .next:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+                   }
