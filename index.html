@@ -50,13 +50,9 @@
     <img src="images/banner3.jpg" alt="shose">
   </div>
 
-  <!-- Prev/Next -->
-  <button class="prev-btn" onclick="changeSlide(-1)">❮</button>
-  <button class="next-btn" onclick="changeSlide(1)">❯</button>
-
   <!-- Dots -->
   <div class="dots">
-    <span onclick="currentSlide(0)" class="active"></span>
+    <span onclick="currentSlide(0)"; ></span>
     <span onclick="currentSlide(1)"></span>
     <span onclick="currentSlide(2)"></span>
   </div>
@@ -233,11 +229,39 @@
   </section>
 
   <!-- ✉ NEWSLETTER -->
-  <section class="newsletter" id="contact">
+  <section class="newsletter" id="contact" style="text-align:center; padding:20px; background:#f9f9f9; border-radius:10px; margin:20px;">
     <h2>📩 Subscribe for Offers</h2>
-    <input type="email" id="subscriberEmail" placeholder="Enter your email">
-    <button onclick="sendSubscription()">Subscribe</button>
+    <input type="email" id="subscriberEmail" placeholder="Enter your email" style="padding:10px; width:60%; border-radius:6px; border:1px solid #ccc; margin:10px 0;">
+    <button onclick="sendSubscription()" style="background:#4CAF50; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-weight:bold;">
+      Send
+    </button>
+    <p style="font-size:14px; color:#666;">We’ll send offers directly to your inbox!</p>
   </section>
+
+<script>
+function sendSubscription() {
+  let customerEmail = document.getElementById("subscriberEmail").value;
+
+  if (!customerEmail) {
+    alert("❗ Please enter your email.");
+    return;
+  }
+
+  // ✅ यहां अपनी default email डालो (जहाँ mails आएँगे)
+  let defaultEmail = "thedeckenstore@gmail.com";
+
+  // ✅ Subject & message
+  let subject = "New Offer Subscription Request";
+  let body =`Hello,
+  A new user subscribed for offers.
+📩 Email: ${customerEmail}
+Thank You!`
+
+
+  // ✅ Gmail/Outlook mail app open karega
+  window.location.href = `mailto:${defaultEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+</script>
 
   <!-- ✅ TRUST BADGES -->
   <div class="trust-badges">
@@ -255,7 +279,7 @@
       <a href="privacy.html">Privacy</a> | 
       <a href="terms.html">Terms</a> | 
       <a href="refund.html">Refund</a> | 
-      <a href="mailto:support@deckenstore.com">Contact</a>
+      <a href="mailto:thedeckenstore@gmail.com">Contact</a>
     </p>
     <p>💳 Payments Accepted: UPI • PhonePe • Paytm </p>
   </footer>
@@ -296,4 +320,4 @@
 
 <script src="script.js"></script>
 </body>
-</html>
+  </html>
