@@ -174,6 +174,14 @@ header {
   align-items: center;
   justify-content: center;
 }
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* ✅ पूरा image दिखे */
+  background: transparent;
+}
+
 @keyframes slide {
   0%, 30%   { transform: translateX(0%); }
   33%, 63%  { transform: translateX(-100%); }
