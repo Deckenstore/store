@@ -522,11 +522,23 @@ body.dark-mode .remove-btn {
     height: 350px;
   }
 }
-/* ✅ FINAL FIX FOR BANNER IMAGES */
+/* ✅ FINAL BANNER IMAGE FIX */
+.banner-slider {
+  position: relative;
+  width: 100%;
+  height: auto;                /* ✅ banner ki height auto hogi */
+  max-height: 250px;           /* ✅ mobile ke liye max height set */
+  overflow: hidden;
+  background: #fff;            /* ✅ empty space ke liye white background */
+  border-radius: 12px;
+}
+
 .banner-slider .slide img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;   /* ✅ pura image bina crop ke dikhega */
-  background-color: #ffffff !important;  /* ✅ white background set ho jayega */
-  transform: none !important;       /* ✅ koi zoom ya scale force hata do */
+  width: 100%;
+  height: auto;
+  max-height: 250px;           /* ✅ image ki height limit */
+  object-fit: contain;         /* ✅ pura image dikhega, crop nahi hoga */
+  display: block;
+  margin: 0 auto;
+  transform: none !important;  /* ✅ koi zoom effect nahi */
 }
