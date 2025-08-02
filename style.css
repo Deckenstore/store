@@ -168,19 +168,27 @@ header {
 .banner-slider {
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 250px; /* ✅ default height */
   overflow: hidden;
   border-radius: 12px;
   margin: 10px 0 20px 0;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+/* ✅ Image bilkul fit hogi, koi zoom nahi */
 .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* box ko fill karega */
-  transform: none;     /* zoom cancel */
+  object-fit: cover;   /* box me clean fit karegi */
+  transform: scale(1); /* default zoom hata diya */
+  transition: transform 0.3s ease-in-out;
 }
+
+/* 🎯 Agar hover par zoom chahiye (optional) */
+.slide img:hover {
+  transform: scale(1.05);  /* hover par halkasa zoom */
+}
+
 /* 🎯 SLIDING ANIMATION */
 @keyframes slide {
   0%   { transform: translateX(0%); }
@@ -189,8 +197,18 @@ header {
   23%  { transform: translateX(-100%); }
   29%  { transform: translateX(-200%); }
   34%  { transform: translateX(-200%); }
-  40% { transform: translateX(0%); }
+  40%  { transform: translateX(0%); }
 }
+
+/* 📱 Responsive banner height (tablet/laptop) */
+@media (min-width: 768px) {
+  .banner-slider {
+    height: 350px;
+  }
+  .slide img {
+    height: 350px;
+  }
+  }
 
 /* ⬅️➡️ SLIDER BUTTONS */
 .prev-btn, .next-btn {
