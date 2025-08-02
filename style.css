@@ -197,7 +197,7 @@ header {
 }
 
 /* ✅ Hover पर zoom-in effect */
-.banner-slider img:hover { transform: scale(1.05); }
+.banner-slider img:hover { transform: scale(1.01); }
 
 /* 🎯 SLIDING ANIMATION */
 @keyframes slide {
