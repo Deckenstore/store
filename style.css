@@ -192,8 +192,9 @@ header {
 .slide img {
   width: 100%;
   height: 250px;
-  object-fit: cover;
-  transition: transform 0.3s ease-in-out;
+  object-fit: contain;   /* cover की जगह contain करेंगे */
+  transition: none;
+  transform: scale(1);   /* force kar ke zoom reset */
 }
 
 /* ✅ Hover पर zoom-in effect */
