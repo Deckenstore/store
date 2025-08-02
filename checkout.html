@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - The Decken Store</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ✅ RESET & THEME */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      color: #222;
+      line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark-mode {
+      background: #121212;
+      color: #f0f0f0;
+    }
+
+    /* ✅ HEADER */
+    header {
+      background: #222;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    .back-btn {
+      background: #ff9800;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #e68900;
+    }
+
+    /* ✅ MAIN CONTAINER */
+    .checkout-container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ✅ LEFT FORM SECTION */
+    .form-box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 0.7s ease;
+    }
+
+    body.dark-mode .form-box {
+      background: #1f1f1f;
+      box-shadow: 0 4px 10px rgba(255,255,255,0.1);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+    }
+
+    body.dark-mode h2 {
+      color: #fff;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 12px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 5px rgba(76,175,80,0.5);
+    }
+
+    /* ✅ PAYMENT METHODS */
+    .payment-methods {
+      margin-top: 15px;
+    }
+
+    .payment-methods label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    /* ✅ ORDER SUMMARY */
+    .order-summary {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: fadeIn 0.9s ease;
+    }
+
+    body.dark-mode .order-summary {
+      background: #1f1f1f;
+    }
+
+    .summary-title {
+      font-size: 20px;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 8px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 15px;
+    }
+
+    /* ✅ BUTTON */
+    .place-btn {
+      width: 100%;
+      padding: 14px;
+      background: #4CAF50;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+
+    .place-btn:hover {
+      background: #388e3c;
+      transform: scale(1.03);
+    }
+
+    /* ✅ SUCCESS BOX */
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 30px;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 18px;
+      animation: popUp 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ HEADER -->
+<header>
+  <a href="cart.html" class="back-btn">⬅ Back</a>
+  <h1>✅ Checkout</h1>
+  <button id="darkModeBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+</header>
+
+<!-- ✅ MAIN CONTAINER -->
+<div class="checkout-container">
+
+  <!-- 📦 LEFT SIDE - FORM -->
+  <div class="form-box">
+    <h2>📦 Enter Your Details</h2>
+
+    <label for="name">👤 Name</label>
+    <input type="text" id="name" placeholder="Your Name">
+
+    <label for="address">🏠 Address</label>
+    <input type="text" id="address" placeholder="Delivery Address">
+
+    <label for="phone">📞 Phone Number</label>
+    <input type="text" id="phone" placeholder="10-digit number">
+
+    <!-- ✅ Payment Method -->
+    <div class="payment-methods">
+      <label><input type="radio" name="payment" value="COD" checked> 💵 Cash on Delivery</label>
+      <label><input type="radio" name="payment" value="UPI"> 📲 UPI Payment</label>
+    </div>
+
+    <button class="place-btn" onclick="placeOrder()">📦 Place Order</button>
+    <div class="success-box" id="successBox">🎉 Your order has been placed successfully!</div>
+  </div>
+
+  <!-- 📜 RIGHT SIDE - ORDER SUMMARY -->
+  <div class="order-summary">
+    <h3 class="summary-title">🛍 Your Order Summary</h3>
+    <div id="summary-items"></div>
+    <div class="total" id="summary-total">Total: ₹0</div>
+  </div>
+
+</div>
+
+<script>
+/* ✅ TELEGRAM DETAILS */
+const TELEGRAM_BOT_TOKEN = "7942211815:AAGo9GylL7zO_SUWWkqJn1AFH40DO-Q0cqY";
+const TELEGRAM_CHAT_ID = "-4891793325";
+
+/* ✅ LOAD CART */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* ✅ DARK MODE */
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+  let btn = document.getElementById("darkModeBtn");
+  if (document.body.classList.contains("dark-mode")) {
+    btn.textContent = "☀ Light Mode";
+    localStorage.setItem("theme", "dark");
+  } else {
+    btn.textContent = "🌙 Dark Mode";
+    localStorage.setItem("theme", "light");
+  }
+}
+
+/* ✅ Load Dark Mode if saved */
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+  document.getElementById("darkModeBtn").textContent = "☀ Light Mode";
+}
+
+/* ✅ RENDER ORDER SUMMARY */
+function renderSummary() {
+  const summaryDiv = document.getElementById("summary-items");
+  const totalEl = document.getElementById("summary-total");
+  summaryDiv.innerHTML = "";
+  let total = 0;
+
+  if (cart.length === 0) {
+    summaryDiv.innerHTML = "<p>Your cart is empty!</p>";
+    totalEl.textContent = "Total: ₹0";
+    return;
+  }
+
+  cart.forEach(item => {
+    total += item.price * item.qty;
+    const div = document.createElement("div");
+    div.className = "summary-item";
+    div.innerHTML = `
+      <span>${item.name} (x${item.qty})</span>
+      <span>₹${item.price * item.qty}</span>
+    `;
+    summaryDiv.appendChild(div);
+  });
+
+  totalEl.textContent = "Total: ₹" + total;
+}
+
+/* ✅ PLACE ORDER */
+async function placeOrder() {
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const payment = document.querySelector('input[name="payment"]:checked').value;
+
+  if (!name || !address || !phone) return alert("⚠️ Please fill all fields!");
+  if (!/^[0-9]{10}$/.test(phone)) return alert("📞 Enter a valid 10-digit phone!");
+
+  if (cart.length === 0) return alert("🛒 Your cart is empty!");
+
+  let total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  let message = `🛍 *New Order Placed!*\n\n👤 Name: ${name}\n📍 Address: ${address}\n📞 Phone: ${phone}\n💳 Payment Method: ${payment}\n\n📦 *Items:*\n`;
+
+  cart.forEach((item, i) => {
+    message += `${i + 1}. ${item.name} - ₹${item.price} x ${item.qty}\n`;
+  });
+
+  message += `\n💰 Total: ₹${total}\n✅ Order Date: ${new Date().toLocaleString()}`;
+
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" }),
+    });
+
+    // ✅ Show success box
+    document.getElementById("successBox").style.display = "block";
+
+    // ✅ Clear cart after 2 seconds and redirect
+    setTimeout(() => {
+      localStorage.removeItem("cart");
+      window.location.href = "index.html";
+    }, 2000);
+
+  } catch (err) {
+    alert("❌ Error sending order. Please try again.");
+    console.error(err);
+  }
+}
+
+/* ✅ INIT */
+renderSummary();
+</script>
+
+</body>
+</html>
