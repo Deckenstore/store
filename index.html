@@ -9,8 +9,8 @@
 <body>
 
   <!-- 🔝 TOP OFFER BAR -->
-  <div class="top-bar">
-    🎉 Free Delivery on Orders Above ₹499 | Festive Sale is Live! 🔥
+  <div class="announcement-bar">
+    🎉 Free Delivery on Orders Above ₹499 | 🚀 Festive Sale is Live! 🔥
   </div>
 
   <!-- 📌 HEADER -->
@@ -25,33 +25,33 @@
   <div id="side-menu" class="side-menu">
     <h2>☰ Main Menu</h2>
 
-    <!-- ✅ SEARCH MOVED HERE -->
+    <!-- ✅ SEARCH BOX -->
     <div class="search-box" style="margin-bottom:15px;">
       <input type="text" id="searchInput" placeholder="Search for products..." onkeyup="searchProducts()">
       <button onclick="searchProducts()">🔍</button>
     </div>
 
-    <button class="menu-link" onclick="scrollToSection('hero')">🏠 Home</button>
-    <button class="menu-link" onclick="scrollToSection('products')">🛍 All Products</button>
-    <button class="menu-link" onclick="scrollToSection('bestsellers')">⭐ Best Sellers</button>
-    <button class="menu-link" onclick="showOrders()">📦 My Orders</button>
-    <button class="menu-link" onclick="scrollToSection('contact')">📞 Contact Us</button>
-    <hr>
-    <button class="menu-link" onclick="showSettings()">⚙️ Settings</button>
-    <button class="close-btn" onclick="toggleMenu()">✖ Close Menu</button>
+    <!-- ✅ MENU LINKS -->
+    <button class="menu-link" onclick="goHome()">🏠 Home</button>
+    <button class="menu-link" onclick="showAllProducts()">🛍 All Products</button>
+    <button class="menu-link" onclick="showBestSellers()">🔥 Best Sellers</button>
+    <button class="menu-link" onclick="showContact()">📞 Contact Us</button>
+    <button class="menu-link" onclick="showSettings()">⚙ Settings</button>
+    <button class="menu-link" onclick="showReviews()">⭐ Reviews</button>
+    <button class="close-btn" onclick="toggleMenu()">❌ Close Menu</button>
   </div>
-
+    
   <!-- 🖼 HERO SECTION -->
   <section id="hero" class="hero">
-    <div class="slides">
-      <img src="images/banner1.jpg" class="active">
-      <img src="images/banner2.jpg">
-      <img src="images/banner3.jpg">
+    <div class="banner-slider">
+      <div class="slides">
+        <img src="banner1.jpg" alt="Sale Banner">
+        <img src="banner2.jpg" alt="New Arrivals">
+        <img src="banner3.jpg" alt="Discount Banner">
+      </div>
     </div>
-    <div class="hero-text">
-      <h1>Welcome to The Decken Store</h1>
-      <p>🔥 Flat 10% Off on First Order 🔥</p>
-    </div>
+    <h1>Welcome to The Decken Store</h1>
+    <p>🔥 Flat 10% Off on First Order 🔥</p>
   </section>
 
   <!-- 🏷 CATEGORIES -->
@@ -71,7 +71,7 @@
     <h2>✨ Trending Products</h2>
     <div class="product-grid" id="productGrid">
 
-      <!-- ✅ ALL PRODUCTS -->
+      <!-- ✅ PRODUCT CARDS -->
       <div class="product-card" data-category="Accessories">
         <img src="images/cap.jpg" alt="Cool Cap">
         <h3>Cool Cap</h3>
@@ -286,4 +286,4 @@
 
 <script src="script.js"></script>
 </body>
-        </html>
+  </html>
