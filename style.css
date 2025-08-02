@@ -506,68 +506,49 @@ body.dark-mode .remove-btn {
   .banner-slider {
     height: 350px;
   }
-  /* 🎞 Banner Slider */
+/* 🎞 Banner Slider */
 .banner-slider {
   position: relative;
   width: 100%;
-  max-height: 350px;
+  max-height: 250px;
   overflow: hidden;
 }
 
 .banner-slider .slides {
   display: flex;
-  width: 300%;
+  width: 300%; /* ✅ 3 images -> 300% */
   transition: transform 0.5s ease-in-out;
 }
 
 .banner-slider .slide {
-  min-width: 100%;
+  flex: 0 0 100%; /* ✅ Each slide takes full width */
 }
 
 .banner-slider img {
   width: 100%;
-  height: 350px;
-  object-fit: cover;
+  height: 250px;
+  object-fit: cover; /* ✅ Keeps images proportionate */
+  display: block;
 }
 
-/* 🔘 Dots */
-.dots {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.dots span {
-  height: 12px;
-  width: 12px;
-  margin: 0 4px;
-  background: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.dots .active {
-  background: #333;
-}
-
-/* ⬅️➡️ Buttons */
+/* ⬅️➡️ Navigation Buttons */
 .prev, .next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   color: #fff;
   border: none;
   padding: 10px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   border-radius: 50%;
   transition: background 0.3s ease;
+  z-index: 10;
 }
 
 .prev:hover, .next:hover {
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .prev {
@@ -576,4 +557,4 @@ body.dark-mode .remove-btn {
 
 .next {
   right: 10px;
-                   }
+}
