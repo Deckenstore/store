@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - The Decken Store</title>
+  <style>
+    /* 🌟 RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f4f6f8;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    /* 🔝 TOP OFFER BAR */
+    .announcement-bar {
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* 📌 HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .menu-btn, .cart {
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .menu-btn:hover, .cart:hover {
+      transform: scale(1.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2e7d32;
+      letter-spacing: 0.5px;
+    }
+
+    /* 📱 SIDE MENU */
+    .menu-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .side-menu.active {
+      transform: translateX(0);
+    }
+
+    .side-menu h2 {
+      padding: 20px;
+      background: #2e7d32;
+      color: white;
+      text-align: center;
+      font-size: 20px;
+      border-bottom: 2px solid #1b5e20;
+    }
+
+    .menu-link, .review-btn, .close-btn {
+      padding: 15px;
+      background: #f8f8f8;
+      border: none;
+      font-size: 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #eee;
+    }
+
+    .menu-link:hover, .review-btn:hover, .close-btn:hover {
+      background: #e0f2e9;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .search-box {
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+      background: #fafafa;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .search-box button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search-box button:hover {
+      background: #1b5e20;
+    }
+
+    /* 📞 CONTACT SECTION */
+    .contact-section {
+      padding: 50px 20px;
+      text-align: center;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin: 30px auto;
+      border-radius: 12px;
+      max-width: 800px;
+    }
+
+    .contact-section h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: #2e7d32;
+    }
+
+    .contact-section p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .contact-form {
+      max-width: 500px;
+      margin: 25px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #fafafa;
+      transition: border 0.3s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: #2e7d32;
+      outline: none;
+      background: #fff;
+    }
+
+    .contact-form textarea {
+      min-height: 110px;
+      resize: none;
+    }
+
+    .contact-form button {
+      background: #2e7d32;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .contact-form button:hover {
+      background: #1b5e20;
+      transform: translateY(-2px);
+    }
+
+    /* 📍 QUICK CONTACT INFO */
+    .contact-info {
+      margin-top: 30px;
+      font-size: 17px;
+      color: #444;
+    }
+
+    .contact-info p {
+      margin: 8px 0;
+    }
+
+    .contact-info a {
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    /* ✅ TRUST BADGES */
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 30px auto;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #2e7d32;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
+    }
+
+    .badge:hover {
+      transform: scale(1.05);
+    }
+
+    /* ⚓ FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px 10px;
+      background: #2e7d32;
+      color: white;
+      margin-top: 30px;
+    }
+
+    footer p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔝 TOP OFFER BAR -->
+  <div class="announcement-bar">
+    🎉 Free Delivery on Orders Above ₹499 | 🚀 Festive Sale is Live! 🔥
+  </div>
+
+  <!-- 📌 HEADER -->
+  <header>
+    <div class="logo">🛍 The Decken Store</div>
+  </header>
+
+  <!-- 📱 SIDE MENU -->
+  <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu()"></div>
+  <div id="side-menu" class="side-menu">
+    <h2>☰ Main Menu</h2>
+    <div class="search-box" style="margin-bottom:15px;">
+      <input type="text" id="searchInput" placeholder="Search for products..." onkeyup="searchProducts()">
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+    <button class="menu-link" onclick="goHome()">🏠 Home</button>
+    <button class="menu-link" onclick="showAllProducts()">🛍 All Products</button>
+    <button class="menu-link" onclick="showBestSellers()">🔥 Best Sellers</button>
+    <button class="menu-link" onclick="window.location.href='contact.html'">📞 Contact Us</button>
+    <button class="menu-link" onclick="showSettings()">⚙ Settings</button>
+    <button class="review-btn" onclick="window.location.href='review.html'">⭐ Reviews</button>
+    <button class="close-btn" onclick="toggleMenu()">❌ Close Menu</button>
+  </div>
+
+  <!-- 📞 CONTACT SECTION -->
+  <section class="contact-section">
+    <h2>📞 Contact Us</h2>
+    <p>Have a question or need help? Fill out the form below or reach us directly.</p>
+
+    <!-- 📩 CONTACT FORM -->
+    <div class="contact-form">
+      <input type="text" id="contactName" placeholder="Your Name">
+      <input type="email" id="contactEmail" placeholder="Your Email">
+      <input type="text" id="contactPhone" placeholder="Your Phone">
+      <textarea id="contactMessage" placeholder="Your Message"></textarea>
+      <button onclick="sendContact()">📨 Send Message</button>
+    </div>
+
+    <!-- 📍 QUICK CONTACT INFO -->
+    <div class="contact-info">
+      <h3>📌 Quick Contact</h3>
+      <p>📧 Email: <a href="mailto:thedeckenstore@gmail.com">thedeckenstore@gmail.com</a></p>
+      <p>📞 Phone: <a href="tel:+911613145098">+91 161 314 5098</a></p>
+      <p>📍 Location: Ludhiana, Punjab, India</p>
+    </div>
+  </section>
+
+  <!-- ✅ TRUST BADGES -->
+  <div class="trust-badges">
+    <div class="badge">✅ 100% Secure Payment</div>
+    <div class="badge">🔄 Easy Returns</div>
+    <div class="badge">⚡ Fast Delivery</div>
+  </div>
+
+  <!-- ⚓ FOOTER -->
+  <footer>
+    <p>© 2025 The Decken Store | 
+      <a href="privacy.html">Privacy</a> | 
+      <a href="terms.html">Terms</a> | 
+      <a href="refund.html">Refund</a> | 
+      <a href="mailto:thedeckenstore@gmail.com">Contact</a>
+    </p>
+    <p>💳 Payments Accepted: UPI • PhonePe • Paytm </p>
+  </footer>
+
+  <script>
+    function sendContact() {
+      let name = document.getElementById('contactName').value;
+      let email = document.getElementById('contactEmail').value;
+      let phone = document.getElementById('contactPhone').value;
+      let message = document.getElementById('contactMessage').value;
+
+      if (!name || !email || !phone || !message) {
+        alert("⚠️ Please fill all fields.");
+        return;
+      }
+
+      // ✅ Send to Telegram (if integrated)
+      const TELEGRAM_BOT_TOKEN = "8249458824:AAFdQriId6KC_7D2QPOuPeNxrOOzWaGR2o8";
+      const TELEGRAM_CHAT_ID = "-4957351467";
+      const text = `📩 *New Contact Message* \n\n👤 Name: ${name}\n📧 Email: ${email}\n📞 Phone: ${phone}\n📝 Message: ${message}`;
+
+      fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: "Markdown" })
+      });
+
+      alert("✅ Your message has been sent!");
+      document.getElementById('contactName').value = "";
+      document.getElementById('contactEmail').value = "";
+      document.getElementById('contactPhone').value = "";
+      document.getElementById('contactMessage').value = "";
+    }
+  </script>
+
+</body>
+</html>
