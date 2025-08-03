@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - The Decken Store</title>
+  <style>
+/* 🌟 GLOBAL RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fefefe;
+  color: #333;
+  line-height: 1.8;
+}
+
+/* 🔝 HEADER */
+.site-header {
+  background: linear-gradient(135deg, #ff7a00, #ff9f4a);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px 80px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.site-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.site-header p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+}
+
+/* 🔙 BACK TO HOME BUTTON */
+.back-home {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #fff;
+  color: #ff7a00;
+  padding: 10px 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+.back-home:hover {
+  background: #ff7a00;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* 🌟 CONTAINER */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* 🏆 SECTION BASE STYLE */
+section {
+  margin-bottom: 50px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+  font-size: 1.9rem;
+  margin-bottom: 15px;
+  color: #ff7a00;
+  text-align: center;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #ff7a00;
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+/* 🌱 BELIEF LIST */
+.belief-section ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.belief-section li {
+  background: #fff7f3;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  border-left: 5px solid #ff7a00;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.belief-section li:hover {
+  background: #ffe9d6;
+}
+
+/* 💌 PROMISE CARDS */
+.promise-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.card {
+  background: #fff7f3;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #444;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: #ffe4d6;
+}
+
+/* 🖋️ TEXT */
+p {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.highlight {
+  color: #ff7a00;
+  font-weight: bold;
+}
+
+/* 🙏 FOOTER */
+.site-footer {
+  background: #ff7a00;
+  color: #fff;
+  text-align: center;
+  padding: 25px 10px;
+  margin-top: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.site-footer p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .site-header h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .container {
+    padding: 30px 15px;
+  }
+  .back-home {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 50px 15px 70px;
+  }
+  .site-header h1 {
+    font-size: 1.8rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- 🔝 HEADER -->
+  <header class="site-header">
+    <a href="index.html" class="back-home">⬅ Back to Home</a>
+    <div class="container">
+      <h1>🌟 The Decken Store 🌟</h1>
+      <p>“Every product tells a story – and every story begins here.”</p>
+    </div>
+  </header>
+
+  <!-- 🏆 ABOUT SECTION -->
+  <section class="about-section">
+    <div class="container">
+      <h2>❤️ Our Story</h2>
+      <p>Every creation has a <span class="highlight">story</span> behind it… and <strong>The Decken Store</strong> is no different. It started with a 💭 dream — a dream to deliver <strong>quality products</strong> wrapped in <strong>love & trust</strong> to every home.</p>
+      <p>This isn’t just an online store, it’s a piece of <span class="highlight">my heart</span>, my effort, and my vision. Every product we pack isn’t just an item – it’s a 🎁 small gift, a slice of happiness, meant to make someone’s day brighter.</p>
+    </div>
+  </section>
+
+  <!-- 🌱 BELIEF SECTION -->
+  <section class="belief-section">
+    <div class="container">
+      <h2>🌱 Our Belief</h2>
+      <ul>
+        <li>✨ Every customer is not just a buyer – they’re a <strong>part of our family</strong>.</li>
+        <li>✨ Every product is not just merchandise – it’s a <strong>promise of quality</strong>.</li>
+        <li>✨ Every order is not just business – it’s <strong>trust and connection</strong>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 🏠 JOURNEY SECTION -->
+  <section class="journey-section">
+    <div class="container">
+      <h2>🏠 Our Journey</h2>
+      <p>It all began with just <strong>a laptop and a dream</strong> 🚀. Slowly, products were added, customers started joining in, and The Decken Store turned into a <span class="highlight">growing family</span>.</p>
+      <p>Even today, every time someone places their <strong>first order</strong>, I feel the same joy I felt on day one 💖.</p>
+    </div>
+  </section>
+
+  <!-- 🎯 DREAM SECTION -->
+  <section class="dream-section">
+    <div class="container">
+      <h2>🎯 Our Dream</h2>
+      <p>The dream is simple – to spread <strong>happiness</strong> with every product we deliver 📦. Whether it’s a coffee mug that brightens up your mornings ☕, or a tote bag that becomes your travel buddy 🎒 – every item carries a little joy.</p>
+    </div>
+  </section>
+
+  <!-- 💌 PROMISE SECTION -->
+  <section class="promise-section">
+    <div class="container">
+      <h2>💌 Our Promise</h2>
+      <div class="promise-cards">
+        <div class="card">❤️ Every product will be packed with love.</div>
+        <div class="card">😊 Every delivery will bring a smile.</div>
+        <div class="card">👨‍👩‍👧‍👦 Every customer will be treated like family.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🙏 THANK YOU -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>🤝 Thank you for being part of our journey! 🌟</p>
+    </div>
+  </footer>
+
+</body>
+</html>
