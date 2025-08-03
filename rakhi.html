@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎀 Rakhi Specials - The Decken Store</title>
+
+  <style>
+    /* ✅ RESET */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #fff7fa;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    /* 🎉 ANNOUNCEMENT BAR */
+    .announcement-bar {
+      background: linear-gradient(90deg, #ff4b91, #ff006e);
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    /* 📌 HEADER */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      background: #ff4b91;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .logo { font-size: 20px; font-weight: bold; }
+    .menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .menu-btn:hover { transform: scale(1.2); }
+    .cart {
+      font-size: 22px;
+      cursor: pointer;
+      position: relative;
+    }
+    .cart-count {
+      background: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+      position: absolute;
+      top: -8px;
+      right: -10px;
+    }
+
+    /* 📱 SIDE MENU */
+    .menu-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 999;
+    }
+    .menu-backdrop.active { display: block; }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -270px;
+      width: 250px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+      padding: 20px;
+      transition: left 0.3s ease-in-out;
+      z-index: 1000;
+    }
+    .side-menu.active { left: 0; }
+
+    .side-menu h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff4b91;
+    }
+
+    .menu-link {
+      display: block;
+      background: #ff4b91;
+      color: white;
+      padding: 12px;
+      margin: 8px 0;
+      text-align: left;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    .menu-link:hover { background: #e63e7f; }
+
+    .close-btn {
+      background: red;
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .close-btn:hover { background: #b30000; }
+
+    /* 🎀 RAKHI HERO BANNER */
+    .rakhi-hero {
+      background: url('https://i.ibb.co/wK3k5Mk/rakhi-banner.jpg') center/cover no-repeat;
+      text-align: center;
+      padding: 70px 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 28px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .rakhi-hero p {
+      font-size: 18px;
+      font-weight: normal;
+      margin-top: 10px;
+    }
+
+    /* 🛍 PRODUCT GRID */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+    .product-card {
+      background: #fff;
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+    .product-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .product-card .price {
+      font-weight: bold;
+      color: #ff4b91;
+      margin: 8px 0;
+    }
+
+    /* ✅ BUTTON STYLE */
+    button {
+      padding: 10px 14px;
+      margin: 5px 4px;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      background: linear-gradient(135deg, #ff4b91, #ff006e);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+    .buy-btn { background: linear-gradient(135deg, #43a047, #2e7d32); }
+
+    /* 🔙 BACK BUTTON */
+    .back-section {
+      text-align: center;
+      margin: 20px;
+    }
+    .back-btn {
+      display: inline-block;
+      padding: 10px 18px;
+      background: #ff4b91;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .back-btn:hover { background: #e63e7f; }
+
+    /* ⚓ FOOTER */
+    footer {
+      background: #ff4b91;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+    footer a { color: yellow; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- 🎉 TOP BAR -->
+  <div class="announcement-bar">🎀 Rakhi Special Offer – Free Delivery on Orders Above ₹499 🎀</div>
+
+  <!-- 📌 HEADER -->
+  <header>
+    <div class="menu-btn" onclick="openMenu()">☰</div>
+    <div class="logo">🎀 Rakhi Store</div>
+    <div class="cart" onclick="window.location.href='cart.html'">
+      🛒<span class="cart-count" id="cartCount">0</span>
+    </div>
+  </header>
+
+  <!-- 📱 SIDE MENU -->
+  <div class="menu-backdrop" id="backdrop" onclick="closeMenu()"></div>
+  <div class="side-menu" id="sideMenu">
+    <h2>Menu</h2>
+    <button class="menu-link" onclick="window.location.href='index.html'">🏠 Home</button>
+    <button class="menu-link" onclick="window.location.href='product.html'">🛍 All Products</button>
+    <button class="menu-link" onclick="window.location.href='contact.html'">📞 Contact</button>
+    <button class="close-btn" onclick="closeMenu()">Close</button>
+  </div>
+
+
+  <!-- 🛍 PRODUCT GRID -->
+  <section class="product-grid">
+    <div class="product-card">
+      <img src="images/rakhi1.jpg" alt="Designer Rakhi">
+      <h3>Designer Rakhi</h3>
+      <p>Elegant Rakhi for your brother. Buy Two.</p>
+      <div class="price">₹149</div>
+      <button onclick="addToCart('Designer Rakhi',149)">Add to Cart</button>
+      <button class="buy-btn" onclick="buyNow('Designer Rakhi',149)">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="images/rakhi2.jpg" alt="Rakhi with Gift">
+      <h3>Rakhi with Gift</h3>
+      <p>Sweeten the bond with love</p>
+      <div class="price">₹299</div>
+      <button onclick="addToCart('Rakhi with Gift',299)">Add to Cart</button>
+      <button class="buy-btn" onclick="buyNow('Rakhi with Gift',299)">Buy Now</button>
+    </div>
+
+    <div class="product-card">
+      <img src="images/rakhi3.jpg" alt="Premium Rakhi Combo">
+      <h3>Premium Rakhi Combo</h3>
+      <p>Luxury combo with Gift & Rakhi</p>
+      <div class="price">₹399</div>
+      <button onclick="addToCart('Premium Rakhi Combo',399)">Add to Cart</button>
+      <button class="buy-btn" onclick="buyNow('Premium Rakhi Combo',399)">Buy Now</button>
+    </div>
+  </section>
+
+  <!-- 🔙 BACK BUTTON -->
+  <div class="back-section">
+    <a href="index.html" class="back-btn">⬅ Back to Home</a>
+  </div>
+
+  <!-- ⚓ FOOTER -->
+  <footer>
+    © 2025 The Decken Store | <a href="privacy.html">Privacy Policy</a>
+  </footer>
+
+  <!-- ✅ MENU SCRIPT + CART SCRIPT -->
+  <script>
+    const sideMenu = document.getElementById('sideMenu');
+    const backdrop = document.getElementById('backdrop');
+    const cartCount = document.getElementById('cartCount');
+
+    function openMenu() {
+      sideMenu.classList.add('active');
+      backdrop.classList.add('active');
+    }
+    function closeMenu() {
+      sideMenu.classList.remove('active');
+      backdrop.classList.remove('active');
+    }
+
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartCount.textContent = cart.length;
+    }
+
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name: name, price: price });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+      alert(name + " added to cart!");
+    }
+
+    function buyNow(name, price) {
+      localStorage.setItem('buyNowProduct', JSON.stringify({ name: name, price: price }));
+      window.location.href = "checkout.html";
+    }
+
+    loadCart();
+  </script>
+
+</body>
+</html>
