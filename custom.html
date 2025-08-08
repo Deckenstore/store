@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Send Product & Details to Telegram</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .card h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #00f2fe, #4facfe);
+    }
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>📦 Product Order Form</h2>
+    <input id="pname" placeholder="Product name" />
+    <input id="price" placeholder="Price (₹)" />
+    <input id="phone" placeholder="Phone number" />
+    <textarea id="address" placeholder="Address"></textarea>
+    <button type="button" onclick="getLocation()">📍 Get Current Location</button>
+    <input id="location" placeholder="Latitude,Longitude" readonly />
+    <button id="sendBtn">Send to Telegram</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    // ===== CONFIG =====
+    const BOT_TOKEN = "7942211815:AAGo9GylL7zO_SUWWkqJn1AFH40DO-Q0cqY"; // BotFather se lo
+    const CHAT_ID   = "-4891793325"; // @userinfobot se lo
+    // ==================
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            document.getElementById("location").value = `${pos.coords.latitude},${pos.coords.longitude}`;
+          },
+          (err) => {
+            alert("Location error: " + err.message);
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const name = document.getElementById("pname").value.trim();
+      const price = document.getElementById("price").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const location = document.getElementById("location").value.trim();
+
+      if (!name || !price || !phone || !address) {
+        document.getElementById("status").textContent = "❌ Please fill all details.";
+        return;
+      }
+
+      const mapsLink = location ? `\n🌍 Location: [Open in Maps](https://www.google.com/maps?q=${location})` : "";
+
+      const text = `🛍 *New Order Received!*\n\n` +
+                   `📦 *Product:* ${escapeMarkdown(name)}\n` +
+                   `💰 *Price:* ₹${escapeMarkdown(price)}\n` +
+                   `📞 *Phone:* ${escapeMarkdown(phone)}\n` +
+                   `🏠 *Address:* ${escapeMarkdown(address)}${mapsLink}`;
+
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+      try {
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text,
+            parse_mode: "Markdown"
+          })
+        });
+
+        const data = await resp.json();
+        if (data.ok) {
+          document.getElementById("status").style.color = "green";
+          document.getElementById("status").textContent = "✅ Order sent to Telegram!";
+        } else {
+          document.getElementById("status").style.color = "red";
+          document.getElementById("status").textContent = "⚠️ Error: " + (data.description || "Unknown error");
+        }
+      } catch (err) {
+        document.getElementById("status").style.color = "red";
+        document.getElementById("status").textContent = "❌ Network error: " + err;
+      }
+    });
+
+    function escapeMarkdown(s){
+      return s.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, "\\$1");
+    }
+  </script>
+</body>
+</html>
