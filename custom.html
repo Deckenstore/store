@@ -3,143 +3,256 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Send Product & Details to Telegram</title>
+  <title>Custom Order (Product + Media + Location)</title>
   <style>
+    :root{
+      --card-bg: #ffffff;
+      --accent1: #4facfe;
+      --accent2: #00f2fe;
+      --success: #28a745;
+      --danger: #e63946;
+    }
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #fef3c7, #ffd6e0);
+      margin: 0;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
     .card {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      max-width: 400px;
       width: 100%;
-      text-align: center;
+      max-width: 420px;
+      background: var(--card-bg);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(10,10,20,0.08);
+      padding: 20px;
     }
-    .card h2 {
-      margin-bottom: 20px;
-      color: #333;
+    h1 { font-size: 20px; margin: 0 0 14px 0; text-align: center; color:#222; }
+    label { display:block; font-size:13px; margin-top:10px; color:#444; }
+    input[type="text"], input[type="number"], input[type="tel"], textarea {
+      width:100%; padding:10px; margin-top:6px; border-radius:8px; border:1px solid #ddd;
+      font-size:15px; box-sizing: border-box;
     }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
+    textarea { resize:vertical; min-height:70px; }
+    .row { display:flex; gap:8px; }
+    .small { flex:1; }
+    .media-area { margin-top:10px; }
+    .btn {
+      display:inline-block; width:100%; margin-top:12px; padding:12px;border-radius:10px;border:0;
+      font-size:16px; cursor:pointer;
+      background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:white;
     }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: linear-gradient(90deg, #4facfe, #00f2fe);
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 8px;
+    .btn-secondary {
+      background: #f1f1f1; color:#333; border: 1px solid #e6e6e6;
     }
-    button:hover {
-      background: linear-gradient(90deg, #00f2fe, #4facfe);
-    }
-    #status {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #555;
-    }
+    .status { margin-top:12px; font-size:14px; color:#333; min-height:20px; text-align:center; }
+    .loc-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .loc-display { flex:1; padding:8px; border-radius:8px; border:1px solid #eee; background:#fafafa; font-size:13px; }
+    .hint { font-size:12px; color:#666; margin-top:6px; }
+    .small-note { font-size:12px; color:#666; text-align:center; margin-top:8px; }
   </style>
 </head>
 <body>
+
   <div class="card">
-    <h2>📦 Product Order Form</h2>
-    <input id="pname" placeholder="Product name" />
-    <input id="price" placeholder="Price (₹)" />
-    <input id="phone" placeholder="Phone number" />
-    <textarea id="address" placeholder="Address"></textarea>
-    <button type="button" onclick="getLocation()">📍 Get Current Location</button>
-    <input id="location" placeholder="Latitude,Longitude" readonly />
-    <button id="sendBtn">Send to Telegram</button>
-    <p id="status"></p>
+    <h1>📦 Product Order</h1>
+
+    <label>Product Name
+      <input id="pname" type="text" placeholder="e.g. Chocolate Gift Box">
+    </label>
+
+    <label>Price (₹)
+      <input id="price" type="number" placeholder="e.g. 499">
+    </label>
+
+    <label>Phone
+      <input id="phone" type="tel" placeholder="+91 98765 43210">
+    </label>
+
+    <label>Address
+      <textarea id="address" placeholder="Enter full delivery address"></textarea>
+    </label>
+
+    <div class="media-area">
+      <label>Image / Video (choose multiple if needed)</label>
+      <input id="media" type="file" accept="image/*,video/*" multiple>
+      <div class="hint">Photos and videos will be sent together as an album (first item contains the caption).</div>
+    </div>
+
+    <div class="loc-row">
+      <button class="btn-secondary" id="getLoc">📍 Get Current Location</button>
+      <div class="loc-display" id="locDisplay">No location</div>
+    </div>
+
+    <button class="btn" id="sendBtn">📨 Send Order</button>
+    <div class="status" id="statusArea"></div>
+    <div class="small-note">The best Custom Product are available hear.</div>
   </div>
 
-  <script>
-    // ===== CONFIG =====
-    const BOT_TOKEN = "7942211815:AAGo9GylL7zO_SUWWkqJn1AFH40DO-Q0cqY"; // BotFather se lo
-    const CHAT_ID   = "-4891793325"; // @userinfobot se lo
-    // ==================
+<script>
+  // ======= CONFIG: Replace with your values =======
+  const BOT_TOKEN = "7942211815:AAGo9GylL7zO_SUWWkqJn1AFH40DO-Q0cqY";
+  const CHAT_ID   = "-4891793325";
+  // ===============================================
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            document.getElementById("location").value = `${pos.coords.latitude},${pos.coords.longitude}`;
-          },
-          (err) => {
-            alert("Location error: " + err.message);
-          }
-        );
-      } else {
-        alert("Geolocation is not supported by this browser.");
-      }
+  const getLocBtn = document.getElementById('getLoc');
+  const locDisplay = document.getElementById('locDisplay');
+  const statusArea = document.getElementById('statusArea');
+  let currentLat = null;
+  let currentLon = null;
+
+  getLocBtn.addEventListener('click', () => {
+    locDisplay.textContent = "Getting location…";
+    if (!navigator.geolocation) {
+      locDisplay.textContent = "Geolocation not supported";
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        currentLat = pos.coords.latitude;
+        currentLon = pos.coords.longitude;
+        locDisplay.textContent = `${currentLat.toFixed(6)}, ${currentLon.toFixed(6)}`;
+      },
+      (err) => {
+        locDisplay.textContent = "Permission denied / error";
+        console.error(err);
+      },
+      { enableHighAccuracy: true, timeout:10000 }
+    );
+  });
+
+  document.getElementById('sendBtn').addEventListener('click', sendToTelegram);
+
+  async function sendToTelegram(){
+    // Basic validation
+    const name = document.getElementById('pname').value.trim();
+    const price = document.getElementById('price').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const files = document.getElementById('media').files;
+
+    if (!name || !price || !phone || !address) {
+      showStatus("Please fill product name, price, phone and address.", true);
+      return;
     }
 
-    document.getElementById("sendBtn").addEventListener("click", async () => {
-      const name = document.getElementById("pname").value.trim();
-      const price = document.getElementById("price").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const address = document.getElementById("address").value.trim();
-      const location = document.getElementById("location").value.trim();
+    disableUI(true);
+    showStatus("Preparing to send...", false);
 
-      if (!name || !price || !phone || !address) {
-        document.getElementById("status").textContent = "❌ Please fill all details.";
-        return;
-      }
+    // Build caption text
+    let captionLines = [];
+    captionLines.push(`🛒 Product: ${name}`);
+    captionLines.push(`💰 Price: ₹${price}`);
+    captionLines.push(`📞 Phone: ${phone}`);
+    captionLines.push(`🏠 Address: ${address}`);
+    if (currentLat !== null && currentLon !== null) {
+      captionLines.push(`📍 Location: https://www.google.com/maps?q=${currentLat},${currentLon}`);
+    }
+    const captionText = captionLines.join("\n");
 
-      const mapsLink = location ? `\n🌍 Location: [Open in Maps](https://www.google.com/maps?q=${location})` : "";
+    try {
+      if (files && files.length > 0) {
+        // prepare FormData for sendMediaGroup
+        const form = new FormData();
+        const mediaArray = [];
+        for (let i = 0; i < files.length; i++) {
+          const f = files[i];
+          const field = `file${i}`;
+          form.append(field, f);
+          const isVideo = f.type.startsWith('video');
+          mediaArray.push({
+            type: isVideo ? "video" : "photo",
+            media: `attach://${field}`,
+            caption: i === 0 ? captionText : "" // caption only on first item
+          });
+        }
+        form.append('chat_id', CHAT_ID);
+        form.append('media', JSON.stringify(mediaArray));
 
-      const text = `🛍 *New Order Received!*\n\n` +
-                   `📦 *Product:* ${escapeMarkdown(name)}\n` +
-                   `💰 *Price:* ₹${escapeMarkdown(price)}\n` +
-                   `📞 *Phone:* ${escapeMarkdown(phone)}\n` +
-                   `🏠 *Address:* ${escapeMarkdown(address)}${mapsLink}`;
+        showStatus("Uploading media to Telegram...", false);
 
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-      try {
-        const resp = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: text,
-            parse_mode: "Markdown"
-          })
+        const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMediaGroup`, {
+          method: 'POST',
+          body: form
         });
 
-        const data = await resp.json();
-        if (data.ok) {
-          document.getElementById("status").style.color = "green";
-          document.getElementById("status").textContent = "✅ Order sent to Telegram!";
-        } else {
-          document.getElementById("status").style.color = "red";
-          document.getElementById("status").textContent = "⚠️ Error: " + (data.description || "Unknown error");
+        const json = await resp.json();
+        if (!resp.ok || !json.ok) {
+          throw new Error(json.description || 'sendMediaGroup failed');
         }
-      } catch (err) {
-        document.getElementById("status").style.color = "red";
-        document.getElementById("status").textContent = "❌ Network error: " + err;
-      }
-    });
 
-    function escapeMarkdown(s){
-      return s.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, "\\$1");
+        showStatus("Media sent. Sending location (if available)...", false);
+
+        // If location exists, send it as actual location message (optional)
+        if (currentLat !== null && currentLon !== null) {
+          await sendLocation(currentLat, currentLon);
+        }
+
+        showStatus("✅ Order sent successfully!", false);
+      } else {
+        // No media — just send as text message
+        showStatus("Sending text order...", false);
+        const data = {
+          chat_id: CHAT_ID,
+          text: captionText
+        };
+        const resp2 = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json2 = await resp2.json();
+        if (!resp2.ok || !json2.ok) throw new Error(json2.description || 'sendMessage failed');
+
+        if (currentLat !== null && currentLon !== null) {
+          await sendLocation(currentLat, currentLon);
+        }
+        showStatus("✅ Order sent successfully!", false);
+      }
+    } catch (err) {
+      console.error(err);
+      showStatus("❌ Error: " + (err.message || err), true);
+    } finally {
+      disableUI(false);
     }
-  </script>
+  }
+
+  async function sendLocation(lat, lon) {
+    try {
+      const payload = { chat_id: CHAT_ID, latitude: lat, longitude: lon };
+      const r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const j = await r.json();
+      if (!r.ok || !j.ok) {
+        console.warn("sendLocation error:", j);
+      }
+    } catch (e) {
+      console.warn("sendLocation failed:", e);
+    }
+  }
+
+  function showStatus(msg, isError){
+    statusArea.style.color = isError ? "var(--danger)" : "var(--success)";
+    statusArea.textContent = msg;
+  }
+  function disableUI(state){
+    document.getElementById('sendBtn').disabled = state;
+    document.getElementById('getLoc').disabled = state;
+    if (state) {
+      document.getElementById('sendBtn').style.opacity = 0.7;
+      document.getElementById('getLoc').style.opacity = 0.7;
+    } else {
+      document.getElementById('sendBtn').style.opacity = 1;
+      document.getElementById('getLoc').style.opacity = 1;
+    }
+  }
+</script>
+
 </body>
 </html>
